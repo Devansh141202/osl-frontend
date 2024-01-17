@@ -1,7 +1,22 @@
-.App {
+ .App {
+  width: 40%;
+  height: 300px;
+  display: flex;
+  justify-content: center;
+  background-color: white;
   text-align: center;
 }
+.main-div{
+  height: 100%;
+}
+.custom-form:hover{
+  border-bottom: 5px solid red;
+}
+.custom-form{
+  border-bottom: 5px solid rgba(255, 0, 0, 0);
+}
 
+/*
 .App-logo {
   height: 40vmin;
   pointer-events: none;
@@ -35,4 +50,4 @@
   to {
     transform: rotate(360deg);
   }
-}
+} */
