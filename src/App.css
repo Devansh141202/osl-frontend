@@ -8,6 +8,7 @@
 }
 .main-div{
   height: 100%;
+  /* background-color: white; */
 }
 .custom-form:hover{
   border-bottom: 5px solid red;

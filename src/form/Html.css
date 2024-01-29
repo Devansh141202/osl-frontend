@@ -1,0 +1,133 @@
+* {
+    margin: 0;
+    padding: 0;
+  }
+  .header {
+    background-color: bisque;
+    margin: 0;
+    padding: 0;
+    height: 50px;
+    width: 100%;
+    position: fixed;
+  }
+  .main {
+    height: 100vh;
+    width: 100%;
+    background-color: #eeee;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .arrow {
+    border: solid black;
+    border-width: 0 3px 3px 0;
+    display: inline-block;
+    padding: 3px;
+  }
+  .left {
+    transform: rotate(135deg);
+    -webkit-transform: rotate(135deg);
+  }
+  #login-text {
+    display: none;
+    align-items: center;
+  }
+  .box-form {
+    padding: 15px;
+    padding: 35px;
+    height: 420px;
+    width: 25%;
+    background-color: white;
+    display: grid;
+    border-top: aqua 5px solid;
+    font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+  }
+  .login-text {
+    display: flex;
+    gap: 25px;
+    align-items: center;
+    /* justify-content: center; */
+    font-size: 22px;
+    margin-bottom: 35px;
+    font-weight: bold;
+    /* position: relative; */
+  }
+  .login-text>div{
+    display: flex;
+    justify-content: center;
+    margin-left: 32px;
+  }
+  .radio-btns {
+    height: fit-content;
+    display: flex;
+    font-size: large;
+    gap: 15px;
+    /* margin-bottom: 20px; */
+    justify-content: flex-start;
+  }
+  .login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    font-size: large;
+    /* margin-bottom: 50px; */
+  }
+  .dropdown__label {
+    font-size: 12px;
+    color: #666666;
+    font-weight: 500;
+  }
+  
+   select {
+    border: none;
+    outline: none;
+    font-size: 16px;
+    margin-top: 5px;
+    width: 100%;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+  }
+  
+  .dropdown__1 {
+    margin-top: 23px;
+  }
+  
+  .dropdown__2 {
+    margin-top: 8px;
+  } 
+  .input {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  input[type="text"] {
+    font-size: 15px;
+    margin-top: 20px;
+    border: none;
+    border-bottom: 1px rgba(0, 0, 0, 0.194) solid;
+  }
+  input[type="text"]:focus {
+    outline: none;
+  }
+  input[type="checkbox"] {
+    margin-right: 3px;
+  }
+  .check-box {
+    display: inline;
+    margin-top: 20px;
+  }
+  .sbt-btn {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: auto;
+    /* width: fit-content; */
+  }
+  #btn {
+    width: 200px;
+    border-radius: 18px;
+    border-style: none;
+    background-color: rgb(63, 210, 139);
+    /* box-shadow: ; */
+    height: 50px;
+    font-size: 15px;
+  }
+  
