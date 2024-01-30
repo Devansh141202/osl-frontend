@@ -32,6 +32,7 @@ const Login = () => {
 
       // Clear any previous login error
       setLoginError("");
+      navigate('/table')
       reset();
     } catch (error) {
       // Handle login error
@@ -41,7 +42,7 @@ const Login = () => {
   };
 
   return (
-    <div className="container d-flex align-items-center justify-content-center">
+    <div className="container d-flex align-items-center justify-content-center mt-5">
       <form
         className="rounded shadow p-3 mb-2 m-5 bg-light text-dark w-50 custom-form"
         onSubmit={handleSubmit(onLogin)}

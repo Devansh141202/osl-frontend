@@ -1,6 +1,5 @@
-
 import React, { useState, useEffect } from "react";
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from "react-router-dom";
 import { Form, useForm } from "react-hook-form";
 import axios from "axios";
 
@@ -19,26 +18,26 @@ const UserDetails = () => {
   const [districts, setDistricts] = useState([]);
 
   useEffect(() => {
-    // Fetch states from your database and update the states state
     const fetchStates = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/api/v1/get-states");
-        setStates(response.data); // Assuming the response.data is an array of states
+        const response = await axios.get(
+          "http://localhost:5000/api/v1/get-states"
+        );
+        setStates(response.data);
       } catch (error) {
         console.error("Error fetching states:", error);
       }
     };
-    
+
     fetchStates();
   }, []);
 
   const handleStateChange = async (selectedState) => {
-    // Fetch districts based on the selected state and update the districts state
     try {
       const response = await axios.get(
         `http://localhost:5000/api/v1/get-districts?state=${selectedState}`
       );
-      setDistricts(response.data); // Assuming the response.data is an array of districts
+      setDistricts(response.data);
     } catch (error) {
       console.error("Error fetching districts:", error);
     }
@@ -50,8 +49,8 @@ const UserDetails = () => {
       "http://localhost:5000/api/v1/create-details",
       formData
     );
-    reset()
-    navigate('/login')
+    reset();
+    navigate("/login");
     console.log(response);
   };
 
@@ -125,10 +124,17 @@ const UserDetails = () => {
           </div>
           <div className="row mt-2">
             <div className="col d-flex align-items-end justify-content-start">
+              <label>Company</label>
+              <select className="from-control"{...register("companyName", { required: true })}>
+              <option value="" defaultValue>
+              Select Company
+            </option>
+                <option value="Google">Google</option>
+              </select>
               <div class="form-check form-check-inline">
                 <input
                   class="form-check-input"
-                  style={{width: "25px", height: "25px"}}
+                  style={{ width: "25px", height: "25px" }}
                   type="radio"
                   name="inlineRadioOptions"
                   id="inlineRadio1"
@@ -142,7 +148,7 @@ const UserDetails = () => {
                   <input
                     class="form-check-input"
                     type="radio"
-                    style={{width: "25px", height: "25px"}}
+                    style={{ width: "25px", height: "25px" }}
                     name="inlineRadioOptions"
                     id="inlineRadio2"
                     value="Female"
@@ -190,11 +196,13 @@ const UserDetails = () => {
               <option value="" defaultValue>
                 Select District
               </option>
-              {districts && districts.length > 0 && districts.map((district) => (
-                <option key={district._id} value={district.districtName}>
-                  {district.districtName}
-                </option>
-              ))}
+              {districts &&
+                districts.length > 0 &&
+                districts.map((district) => (
+                  <option key={district._id} value={district.districtName}>
+                    {district.districtName}
+                  </option>
+                ))}
             </select>
             {errors.district && (
               <p style={{ color: "red" }}>This is a required field</p>

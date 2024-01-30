@@ -15,7 +15,7 @@ export default function LabTabs() {
 
   return (
     <div
-      style={{ backgroundColor: "white" }}
+      style={{ backgroundColor: "white", marginTop:"100px"}}
       className="p-3 d-flex justify-content-center"
     >
       <Box sx={{ width: "100%", typography: "body1" }}>
@@ -93,12 +93,12 @@ export default function LabTabs() {
                 <tr>
                   <th scope="row">6</th>
                   <td>Romin</td>
-                  <td><Link>Aggregation</Link></td>
+                  <td><Link to={'/login'}>Aggregation</Link></td>
                 </tr>
                 <tr>
                   <th scope="row">7</th>
                   <td>Sarkar</td>
-                  <td><Link to={'/login'}>Node-python integration</Link></td>
+                  <td><Link to={'/image'}>Node-python integration</Link></td>
                 </tr>
               </tbody>
             </table>

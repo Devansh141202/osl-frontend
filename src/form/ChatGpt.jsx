@@ -29,9 +29,9 @@ export default function ChatGPT() {
   };
 
   return (
-    <div className="container container-sm p-1">
+    <div className="container container-sm p-3 bg-light-subtle">
       {" "}
-      <div className="d-flex justify-content-center align-items-center">
+      <div className="d-flex justify-content-center align-items-center mt-5">
         <img src={LOGO} className="logo p-2 box-shadow" alt=""></img>
         &nbsp;&nbsp;&nbsp;
         <h1 className="title text-center text-darkGreen" style={{fontSize:'65px'}}>ChatGPT API</h1>

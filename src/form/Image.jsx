@@ -38,18 +38,22 @@ const Image = () => {
   };
   const { register, handleSubmit, reset } = useForm();
   const getImage = async (data) => {
-    const response = await axios.get(`http://localhost:4050/get-image/${data.id}`, {
-    });
-    setImage(response.data.image.image)
-    console.log(Image)
-   console.log(response)
+    const response = await axios.get(
+      `http://localhost:4050/get-image/${data.id}`,
+      {}
+    );
+    setImage(response.data.image.image);
+    console.log(Image);
+    console.log(response);
   };
 
   return (
-    <div className="p-3 bg-white">
-      <h2>Single File Upload</h2>
-      <input type="file" onChange={handleFileChange} />
-      <button onClick={handleUpload}>Upload</button>
+    <div className="p-3 bg-white" style={{ marginTop: "100px" }}>
+      <h2 style={{ textAlign: "center" }}>Single File Upload</h2>
+      <div className="d-flex justify-content-center">
+        <input type="file" onChange={handleFileChange} />
+        <button onClick={handleUpload}>Upload</button>
+      </div>
       <div class="d-flex justify-content-center pt-5 mt-3">
         <div class="input-group w-auto">
           <form
@@ -68,7 +72,7 @@ const Image = () => {
               {...register("id", { required: true })}
             />
             <button
-            //   class="btn"
+              //   class="btn"
               type="submit"
               id="button-addon1"
               data-mdb-ripple-color="dark"
@@ -79,7 +83,15 @@ const Image = () => {
         </div>
       </div>
       <div className="d-flex justify-content-center">
-       {image ? <img src={'data:image/png;base64,' + image} alt="image" style={{height: '300px',width: '600px' }}/>: <p style={{color: 'red'}}>No image found</p>}
+        {image ? (
+          <img
+            src={"data:image/png;base64," + image}
+            alt="image"
+            style={{ height: "300px", width: "600px" }}
+          />
+        ) : (
+          <p style={{ color: "red" }}>No image found</p>
+        )}
       </div>
     </div>
   );

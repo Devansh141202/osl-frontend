@@ -1,69 +1,190 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import HoursChart from './HoursChart';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { Bar } from "react-chartjs-2";
+import HoursChart from "./Chart.jsx";
+import { Form, useForm } from "react-hook-form";
+import { CodeSharp } from "@material-ui/icons";
+import { white } from "material-ui/styles/colors";
+import { Col, Row } from "react-bootstrap";
 
 const App = () => {
+  const {
+    register,
+    setValue,
+    formState: { errors },
+  } = useForm();
   const [totalHoursData, setTotalHoursData] = useState([]);
-  const [hoursByMonthData, setHoursByMonthData] = useState([]);
-  const [hoursByStateData, setHoursByStateData] = useState([]);
-  const [hoursByDistrictData, setHoursByDistrictData] = useState([]);
-  const [loading, setLoading] = useState(true);
 
+  // State for user input
+  const [selectedMonth, setSelectedMonth] = useState("");
+  const [selectedState, setSelectedState] = useState("");
+  const [selectedDistrict, setSelectedDistrict] = useState("");
+  const [chartData, setChartData] = useState({});
+  const [data, setData] = useState("");
+  const [states, setStates] = useState([]);
+  const [districts, setDistricts] = useState([]);
+
+  const fetchStates = async () => {
+    try {
+      const response = await axios.get(
+        "http://localhost:5000/api/v1/get-states"
+      );
+      setStates(response.data);
+    } catch (error) {
+      console.error("Error fetching states:", error);
+    }
+  };
+  const fetchTotalHours = async () => {
+    let url = "http://localhost:5000/api/v1/get-hours?";
+    if (selectedState) {
+      url += `state=${selectedState}`;
+      if (selectedDistrict) {
+        url += `&district=${selectedDistrict}`;
+      }
+    }
+    if (selectedMonth) {
+      url = url + `?month=${selectedMonth}`;
+    }
+    console.log(url);
+    try {
+      const response = await axios.get(url);
+      console.log("This is ", response.data);
+      setTotalHoursData(response.data);
+    } catch (error) {
+      console.error("Error fetching total hours data:", error);
+    }
+  };
   useEffect(() => {
-    const fetchTotalHours = async () => {
-      try {
-        const response = await axios.get('/api/getHours');
-        setTotalHoursData(response.data);
-      } catch (error) {
-        console.error('Error fetching total hours data:', error);
-      }
-    };
-
-    const fetchHoursByMonth = async () => {
-      try {
-        const response = await axios.get('/api/getHoursByMonth');
-        setHoursByMonthData(response.data);
-      } catch (error) {
-        console.error('Error fetching hours by month data:', error);
-      }
-    };
-
-    const fetchHoursByState = async () => {
-      try {
-        const response = await axios.get('/api/getHoursByState/STATE_ID'); // Replace STATE_ID with the actual state ID
-        setHoursByStateData(response.data);
-      } catch (error) {
-        console.error('Error fetching hours by state data:', error);
-      }
-    };
-
-    const fetchHoursByDistrict = async () => {
-      try {
-        const response = await axios.get('/api/getHoursByDistrict/DISTRICT_ID'); // Replace DISTRICT_ID with the actual district ID
-        setHoursByDistrictData(response.data);
-      } catch (error) {
-        console.error('Error fetching hours by district data:', error);
-      }
-    };
-
-    const fetchData = async () => {
-      await Promise.all([fetchTotalHours(), fetchHoursByMonth(), fetchHoursByState(), fetchHoursByDistrict()]);
-      setLoading(false);
-    };
-
-    fetchData();
+    fetchTotalHours();
+  }, [selectedMonth, selectedState, selectedDistrict]);
+  const finalData = {
+    labels: totalHoursData.map((item) => item._id),
+    datasets: [
+      {
+        label: "Hours Worked",
+        data: totalHoursData.map((item) => item.count),
+        backgroundColor: "rgba(75,192,192,0.4)",
+        borderColor: "rgba(75,192,192,0.5)",
+        borderWidth: 1,
+      },
+    ],
+  };
+  useEffect(() => {
+    console.log(totalHoursData);
+    fetchStates();
+    fetchTotalHours();
   }, []);
+  const handleStateChange = async (selectedState) => {
+    console.log(selectedState)
+    try {
+      const response = await axios.get(
+        `http://localhost:5000/api/v1/get-districts?state=${selectedState}`
+        );
+        setDistricts(response.data);
+      } catch (error) {
+        console.error("Error fetching districts:", error);
+      }
+    };
+    
+    // if (loading) {
+      //   return <div>Loading...</div>;
+      // }
+      
+      return (
+        <div style={{ backgroundColor: white }}>
+      <h2>Total Hours Worked</h2>
+      <div className="d-flex">
+        <div className="form-group m-3">
+          <label htmlFor="state">State</label>
+          <select
+            className="form-control"
+            // {...register("state", { required: true })}
+            onChange={(e) => {
+              setSelectedState(e.target.value);
+              setValue("district", "");
+              handleStateChange(e.target.value);
+            }}
+          >
+            <option value="" selected>
+              Select State
+            </option>
+            {states.map((state) => (
+              <option key={state._id} value={state._id}>
+                {console.log()}
+                {state.stateName}
+              </option>
+            ))}
+          </select>
+          {errors.state && (
+            <p style={{ color: "red" }}>This is a required field</p>
+          )}
+        </div>
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
-  return (
-    <div>
-      <HoursChart data={totalHoursData} title="Total Hours Worked" />
-      <HoursChart data={hoursByMonthData} title="Hours Worked by Month" />
-      <HoursChart data={hoursByStateData} title="Hours Worked by State" />
-      <HoursChart data={hoursByDistrictData} title="Hours Worked by District" />
+        <div className="form-group m-3">
+          <label htmlFor="district">District</label>
+          <select
+            className="form-control"
+            // {...register("district", { required: true })}
+            onChange={(e) => setSelectedDistrict(e.target.value)}
+            disabled={!states || states.length === 0}
+          >
+            <option value="" defaultValue>
+              Select District
+            </option>
+            {districts &&
+              districts.length > 0 &&
+              districts.map((district) => (
+                <option key={district._id} value={district._id}>
+                  {district.districtName}
+                </option>
+              ))}
+          </select>
+          {errors.district && (
+            <p style={{ color: "red" }}>This is a required field</p>
+          )}
+        </div>
+        <div className="form-group m-3">
+          <label htmlFor="month">Month</label>
+          <select
+            className="form-control"
+            onChange={(e) => {
+              console.log("fewfwe", e.target.value)
+              setSelectedMonth(e.target.value);
+            }}
+            // {...register("month")}
+          >
+            <option value="" defaultValue>
+              Select Month
+            </option>
+            <option value="January">January</option>
+            <option value="February">February</option>
+            <option value="March">March</option>
+            <option value="April">April</option>
+            <option value="May">May</option>
+            <option value="June">June</option>
+            <option value="July">July</option>
+            <option value="August">August</option>
+            <option value="September">September</option>
+            <option value="October">October</option>
+            <option value="November">November</option>
+            <option value="December">December</option>
+          </select>
+        </div>
+      </div>
+      <div className="w-25">
+        <div style={{ width: "100%", height: "400px" }}>
+          <Bar
+            data={finalData}
+            options={{
+              responsive: true,
+              maintainAspectRatio: false,
+              barThickness:100
+            }}
+            // data={totalHoursData}
+          />
+        </div>
+      </div>
+      {/* <Bar></Bar> */}
     </div>
   );
 };
