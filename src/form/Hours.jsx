@@ -19,8 +19,6 @@ const App = () => {
   const [selectedMonth, setSelectedMonth] = useState("");
   const [selectedState, setSelectedState] = useState("");
   const [selectedDistrict, setSelectedDistrict] = useState("");
-  const [chartData, setChartData] = useState({});
-  const [data, setData] = useState("");
   const [states, setStates] = useState([]);
   const [districts, setDistricts] = useState([]);
 
@@ -41,9 +39,12 @@ const App = () => {
       if (selectedDistrict) {
         url += `&district=${selectedDistrict}`;
       }
+      if(selectedMonth){
+        url+=  `&month=${selectedMonth}`
+      }
     }
-    if (selectedMonth) {
-      url = url + `?month=${selectedMonth}`;
+    else if(selectedMonth) {
+      url = url + `month=${selectedMonth}`;
     }
     console.log(url);
     try {
@@ -92,7 +93,7 @@ const App = () => {
       
       return (
         <div style={{ backgroundColor: white }}>
-      <h2>Total Hours Worked</h2>
+      <h2 style={{marginLeft:"15px"}} >Total Hours Worked</h2>
       <div className="d-flex">
         <div className="form-group m-3">
           <label htmlFor="state">State</label>
@@ -171,8 +172,8 @@ const App = () => {
           </select>
         </div>
       </div>
-      <div className="w-25">
-        <div style={{ width: "100%", height: "400px" }}>
+      <div className="w-100 d-flex">
+        <div style={{ width: "25%", height: "400px" }}>
           <Bar
             data={finalData}
             options={{
