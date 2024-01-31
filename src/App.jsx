@@ -27,7 +27,7 @@ function App() {
           <img src={logo1} style={{ height: "60px", marginLeft: "20px" }}></img>
         </a>
       </nav>
-      <Container fluid className="mt-3">
+      <Container fluid >
         <Router>
           <Routes>
             <Route path="/" element={<Home />} />

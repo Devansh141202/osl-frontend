@@ -91,19 +91,24 @@ const App = () => {
   //   return <div>Loading...</div>;
   // }
   const handleReset = () => {
-    setSelectedState('');
-    setSelectedDistrict('');
-    setSelectedMonth('');
+    setSelectedState("");
+    setSelectedDistrict("");
+    setSelectedMonth("");
+    document.getElementById("stateDropdown").selectedIndex = 0;
+    document.getElementById("districtDropdown").selectedIndex = 0;
+    document.getElementById("monthDropdown").selectedIndex = 0;
   };
 
   return (
     <div style={{ backgroundColor: white }}>
-      <h2 style={{ marginLeft: "15px" }}>Total Hours Worked</h2>
+      <h2 className="mt-4 mb-0"style={{ marginLeft: "15px" }}>Total Hours Worked</h2>
       <div className="d-flex">
         <div className="form-group m-3">
           <label htmlFor="state">State</label>
           <select
+            id="stateDropdown"
             className="form-control"
+            style={{width: "150px"}}
             // {...register("state", { required: true })}
             onChange={(e) => {
               setSelectedState(e.target.value);
@@ -126,9 +131,11 @@ const App = () => {
           )}
         </div>
 
-        <div className="form-group m-3">
+        <div className="form-group m-3"
+        style={{width: "150px"}}>
           <label htmlFor="district">District</label>
           <select
+            id="districtDropdown"
             className="form-control"
             // {...register("district", { required: true })}
             onChange={(e) => setSelectedDistrict(e.target.value)}
@@ -153,6 +160,8 @@ const App = () => {
           <label htmlFor="month">Month</label>
           <select
             className="form-control"
+            style={{width: "150px"}}
+            id="monthDropdown"
             onChange={(e) => {
               setSelectedMonth(e.target.value);
             }}
@@ -179,7 +188,7 @@ const App = () => {
           color="success"
           variant="contained"
           onClick={handleReset}
-          style={{ marginTop: "53px", height: "30px", width: "px" }}
+          style={{ marginTop: "53px", height: "30px", width: "30px" }}
         >
           Reset
         </Button>

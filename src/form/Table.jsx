@@ -6,10 +6,31 @@ import { Link, useNavigate } from "react-router-dom";
 import MaterialTable from "material-table";
 
 function Table() {
+  const months = [
+    "January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December"
+  ];
+
   const [columns, setColumns] = useState([
     { title: "ID", field: "_id", editable: "never" },
     { title: "Name", field: "companyName" },
-    { title: "Month", field: "month" },
+    {
+      title: "Month",
+      field: "month",
+      editComponent: (props) => (
+        <select
+          value={props.value}
+          onChange={(e) => props.onChange(e.target.value)}
+        >
+          <option value="" disabled>Select Month</option>
+          {months.map((month) => (
+            <option key={month} value={month}>
+              {month}
+            </option>
+          ))}
+        </select>
+      ),
+    },
     { title: "Hours", field: "hours", type: "string" },
   ]);
   const navigate = useNavigate();

@@ -20,7 +20,7 @@ const Image = () => {
     console.log(selectedFile);
 
     try {
-      const response = await fetch("https://osl-learning.onrender.com/api/photos", {
+      const response = await fetch("https://osl-sarkar-backend.onrender.com/api/photos", {
         method: "POST",
         body: formData,
       });
