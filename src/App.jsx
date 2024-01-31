@@ -12,6 +12,10 @@ import ChatGPT from "./form/ChatGpt";
 import Chart from "./form/Chart";
 import Hours from "./form/Hours";
 import logo1 from "./logo.png";
+import '@fontsource/roboto/300.css';
+import '@fontsource/roboto/400.css';
+import '@fontsource/roboto/500.css';
+import '@fontsource/roboto/700.css';
 import { Container } from "react-bootstrap";
 
 function App() {
@@ -19,7 +23,7 @@ function App() {
     <div className="main-div">
       {/* <img src={logo1} style={{height:"80px", margin:"20px"}}></img> */}
       <nav class="navbar fixed-top navbar-light bg-light">
-        <a class="navbar-brand" href="#">
+        <a class="navbar-brand" href="/">
           <img src={logo1} style={{ height: "60px", marginLeft: "20px" }}></img>
         </a>
       </nav>

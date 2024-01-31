@@ -6,7 +6,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 export default function ChatGPT() {
   const [prompt, setPrompt] = useState("");
   const [response, setResponse] = useState("");
-  const url = "http://localhost:4000/chatGPT";
+  const url = "https://osl-learning.onrender.com/chatGPT";
 
   const handleSubmit = (e) => {
     e.preventDefault();

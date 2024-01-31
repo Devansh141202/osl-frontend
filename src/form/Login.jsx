@@ -18,7 +18,7 @@ const Login = () => {
     console.log(formData);
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/v1/login",
+        "https://osl-learning.onrender.com/api/v1/login",
         formData
       );
       const token = response.data.token;
@@ -76,7 +76,7 @@ const Login = () => {
             id="password"
             placeholder="Password"
             {...register("password", {
-              required: true,
+              required: "This field is required",
               pattern: {
                 value:
                   /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,

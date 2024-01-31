@@ -21,7 +21,7 @@ const UserDetails = () => {
     const fetchStates = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:5000/api/v1/get-states"
+          "https://osl-learning.onrender.com/api/v1/get-states"
         );
         setStates(response.data);
       } catch (error) {
@@ -35,7 +35,7 @@ const UserDetails = () => {
   const handleStateChange = async (selectedState) => {
     try {
       const response = await axios.get(
-        `http://localhost:5000/api/v1/get-districts?state=${selectedState}`
+        `https://osl-learning.onrender.com/api/v1/get-districts?state=${selectedState}`
       );
       setDistricts(response.data);
     } catch (error) {
@@ -46,7 +46,7 @@ const UserDetails = () => {
   const onFinish = async (formData) => {
     console.log("hello");
     const response = await axios.post(
-      "http://localhost:5000/api/v1/create-details",
+      "https://osl-learning.onrender.com/api/v1/create-details",
       formData
     );
     reset();
@@ -130,6 +130,7 @@ const UserDetails = () => {
               Select Company
             </option>
                 <option value="Google">Google</option>
+                <option value="Amazon">Amazon</option>
               </select>
               <div class="form-check form-check-inline">
                 <input
@@ -175,7 +176,7 @@ const UserDetails = () => {
                 Select State
               </option>
               {states.map((state) => (
-                <option key={state._id} value={state.stateName}>
+                <option key={state._id} value={state._id}>
                   {console.log()}
                   {state.stateName}
                 </option>
@@ -199,7 +200,7 @@ const UserDetails = () => {
               {districts &&
                 districts.length > 0 &&
                 districts.map((district) => (
-                  <option key={district._id} value={district.districtName}>
+                  <option key={district._id} value={district._id}>
                     {district.districtName}
                   </option>
                 ))}

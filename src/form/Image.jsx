@@ -20,8 +20,7 @@ const Image = () => {
     console.log(selectedFile);
 
     try {
-      // Replace this URL with your server-side endpoint for handling file uploads
-      const response = await fetch("http://localhost:4050/api/photos", {
+      const response = await fetch("https://osl-learning.onrender.com/api/photos", {
         method: "POST",
         body: formData,
       });
@@ -39,7 +38,7 @@ const Image = () => {
   const { register, handleSubmit, reset } = useForm();
   const getImage = async (data) => {
     const response = await axios.get(
-      `http://localhost:4050/get-image/${data.id}`,
+      `https://osl-learning.onrender.com/get-image/${data.id}`,
       {}
     );
     setImage(response.data.image.image);

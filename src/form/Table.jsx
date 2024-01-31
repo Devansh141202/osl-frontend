@@ -8,12 +8,11 @@ import MaterialTable from "material-table";
 function Table() {
   const [columns, setColumns] = useState([
     { title: "ID", field: "_id", editable: "never" },
-    { title: "Company Name", field: "companyName" },
+    { title: "Name", field: "companyName" },
     { title: "Month", field: "month" },
     { title: "Hours", field: "hours", type: "string" },
   ]);
   const navigate = useNavigate();
-  const [id, setId] = useState([]);
   const [data, setData] = useState([
     { _id: "1", companyName: "Company A", month: "January", hours: "80" },
   ]);
@@ -30,12 +29,12 @@ function Table() {
     try {
       const userId = getUserIdFromToken();
       const response = await axios.post(
-        "http://localhost:5000/api/v1/add-row",
+        "https://osl-learning.onrender.com/api/v1/add-row",
         { userId, ...newData }
       );
       try {
         const response = await axios.get(
-          `http://localhost:5000/api/v1/get-rows`,
+          `https://osl-learning.onrender.com/api/v1/get-rows`,
           {
             headers: { Authorization: localStorage.getItem("token") },
           }
@@ -54,7 +53,7 @@ function Table() {
       // console.log(oldData)
       const userId = getUserIdFromToken();
       const response = await axios.put(
-        `http://localhost:5000/api/v1/update-rows/${oldData._id}`,
+        `https://osl-learning.onrender.com/api/v1/update-rows/${oldData._id}`,
         {
           userId: userId,
           ...newData,
@@ -66,8 +65,7 @@ function Table() {
       const updatedData = [...data];
       const index = oldData.tableData.id;
       console.log(updatedData[index]);
-      updatedData[index] = response.data.obj;
-      console.log(response.data);
+      updatedData[index] = response.data.resp;
       setData(updatedData);
     } catch (error) {
       console.error("Error updating row:", error);
@@ -78,7 +76,7 @@ function Table() {
     try {
       const userId = getUserIdFromToken();
       await axios.delete(
-        `http://localhost:5000/api/v1/delete-rows/${oldData._id}`,
+        `https://osl-learning.onrender.com/api/v1/delete-rows/${oldData._id}`,
         {
           data: { userId },
         }
@@ -86,21 +84,22 @@ function Table() {
       const updatedData = [...data];
       const index = oldData.tableData.id;
       updatedData.splice(index, 1);
-      console.log(updatedData);
+      console.log("this is " + updatedData);
       setData(updatedData);
     } catch (error) {
       console.error("Error deleting row:", error);
     }
   };
-
+  console.count("render")
   useEffect(() => {
-    const userId = getUserIdFromToken();
-    console.log(userId);
-    console.log(userId);
+    // const userId = getUserIdFromToken();
+    // console.log(userId);
+
+    // console.log(userId);
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/api/v1/get-rows`,
+          `https://osl-learning.onrender.com/api/v1/get-rows`,
           {
             headers: { Authorization: localStorage.getItem("token") },
           }
@@ -110,26 +109,13 @@ function Table() {
         console.error("Error fetching data:", error);
       }
     };
-    const token = localStorage.getItem("token");
-
-    console.log(token);
-    axios
-      .get("http://localhost:5000/api/v1/verify-token", {
-        headers: { Authorization: localStorage.getItem("token") },
-      })
-      .then(() => {
-        fetchData();
-      })
-      .catch(() => {
-        navigate("/login");
-      });
     fetchData();
   }, []);
 
   return (
     <>
       {/* {console.log(data)} */}
-      <div style={{ marginTop: "100px" }}>
+      <div className="container-fluid bg-white" style={{ marginTop: "100px" }}>
         <MaterialTable
           title="Editable Preview"
           columns={columns}
@@ -141,7 +127,9 @@ function Table() {
             onRowDelete: deleteRow,
           }}
         />
-        <Hours />
+        <div className="w-100 d-flex justify-content-start" style={{backgroundColor:"white"}}>
+          <Hours />
+        </div>
       </div>
     </>
   );

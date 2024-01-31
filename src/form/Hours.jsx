@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Bar } from "react-chartjs-2";
 import HoursChart from "./Chart.jsx";
+import Button from "@mui/material/Button";
 import { Form, useForm } from "react-hook-form";
 import { CodeSharp } from "@material-ui/icons";
 import { white } from "material-ui/styles/colors";
@@ -25,7 +26,7 @@ const App = () => {
   const fetchStates = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:5000/api/v1/get-states"
+        "https://osl-learning.onrender.com/api/v1/get-states"
       );
       setStates(response.data);
     } catch (error) {
@@ -33,17 +34,16 @@ const App = () => {
     }
   };
   const fetchTotalHours = async () => {
-    let url = "http://localhost:5000/api/v1/get-hours?";
+    let url = "https://osl-learning.onrender.com/api/v1/get-hours?";
     if (selectedState) {
       url += `state=${selectedState}`;
       if (selectedDistrict) {
         url += `&district=${selectedDistrict}`;
       }
-      if(selectedMonth){
-        url+=  `&month=${selectedMonth}`
+      if (selectedMonth) {
+        url += `&month=${selectedMonth}`;
       }
-    }
-    else if(selectedMonth) {
+    } else if (selectedMonth) {
       url = url + `month=${selectedMonth}`;
     }
     console.log(url);
@@ -64,7 +64,7 @@ const App = () => {
       {
         label: "Hours Worked",
         data: totalHoursData.map((item) => item.count),
-        backgroundColor: "rgba(75,192,192,0.4)",
+        backgroundColor: "rgba(75,192,192,0.8)",
         borderColor: "rgba(75,192,192,0.5)",
         borderWidth: 1,
       },
@@ -76,24 +76,29 @@ const App = () => {
     fetchTotalHours();
   }, []);
   const handleStateChange = async (selectedState) => {
-    console.log(selectedState)
+    console.log(selectedState);
     try {
       const response = await axios.get(
-        `http://localhost:5000/api/v1/get-districts?state=${selectedState}`
-        );
-        setDistricts(response.data);
-      } catch (error) {
-        console.error("Error fetching districts:", error);
-      }
-    };
-    
-    // if (loading) {
-      //   return <div>Loading...</div>;
-      // }
-      
-      return (
-        <div style={{ backgroundColor: white }}>
-      <h2 style={{marginLeft:"15px"}} >Total Hours Worked</h2>
+        `https://osl-learning.onrender.com/api/v1/get-districts?state=${selectedState}`
+      );
+      setDistricts(response.data);
+    } catch (error) {
+      console.error("Error fetching districts:", error);
+    }
+  };
+
+  // if (loading) {
+  //   return <div>Loading...</div>;
+  // }
+  const handleReset = () => {
+    setSelectedState('');
+    setSelectedDistrict('');
+    setSelectedMonth('');
+  };
+
+  return (
+    <div style={{ backgroundColor: white }}>
+      <h2 style={{ marginLeft: "15px" }}>Total Hours Worked</h2>
       <div className="d-flex">
         <div className="form-group m-3">
           <label htmlFor="state">State</label>
@@ -149,7 +154,6 @@ const App = () => {
           <select
             className="form-control"
             onChange={(e) => {
-              console.log("fewfwe", e.target.value)
               setSelectedMonth(e.target.value);
             }}
             // {...register("month")}
@@ -171,15 +175,23 @@ const App = () => {
             <option value="December">December</option>
           </select>
         </div>
+        <Button
+          color="success"
+          variant="contained"
+          onClick={handleReset}
+          style={{ marginTop: "53px", height: "30px", width: "px" }}
+        >
+          Reset
+        </Button>
       </div>
       <div className="w-100 d-flex">
-        <div style={{ width: "25%", height: "400px" }}>
+        <div style={{ width: "100%", height: "400px" }}>
           <Bar
             data={finalData}
             options={{
               responsive: true,
               maintainAspectRatio: false,
-              barThickness:100
+              barThickness: 100,
             }}
             // data={totalHoursData}
           />
