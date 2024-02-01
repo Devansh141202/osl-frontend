@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Form, useForm } from "react-hook-form";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const UserDetails = () => {
   const {
@@ -50,7 +51,12 @@ const UserDetails = () => {
       formData
     );
     reset();
-    navigate("/login");
+    toast.success("Details added successfully!", {
+      position: "top-center",
+    });
+    setTimeout(() => {
+      navigate("/login");
+    }, 2000);
     console.log(response);
   };
 
@@ -60,7 +66,7 @@ const UserDetails = () => {
       style={{ height: "100vh", width: "100vw" }}
     >
       <form
-      style={{height:"600px"}}
+        style={{ height: "600px" }}
         className="rounded mb-0 shadow p-3 bg-light text-dark w-50 custom-form"
         onSubmit={handleSubmit((formData) => {
           onFinish(formData);
@@ -251,12 +257,12 @@ const UserDetails = () => {
             <input
               type="checkbox"
               class="form-check-input"
-              style={{width:"25px", height:"3vh"}}
+              style={{ width: "25px", height: "3vh" }}
               id="exampleCheck1"
               {...register("rememberMe")}
             />
             &nbsp;
-            <small class="form-check-small"  for="exampleCheck1">
+            <small class="form-check-small" for="exampleCheck1">
               Remember me
             </small>
           </div>

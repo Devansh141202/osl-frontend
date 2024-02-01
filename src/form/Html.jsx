@@ -4,9 +4,9 @@ import './Html.css'
 const Html = () => {
   return (
     <div>
-      <header class="header">
+      {/* <header class="header">
       <h1>hello this is html and css</h1>
-    </header>
+    </header> */}
     <div class="main">
       <div class="box-form">
         <div class="login-text">

@@ -7,8 +7,18 @@ import MaterialTable from "material-table";
 
 function Table() {
   const months = [
-    "January", "February", "March", "April", "May", "June",
-    "July", "August", "September", "October", "November", "December"
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
   ];
 
   const [columns, setColumns] = useState([
@@ -22,7 +32,9 @@ function Table() {
           value={props.value}
           onChange={(e) => props.onChange(e.target.value)}
         >
-          <option value="" disabled>Select Month</option>
+          <option value="" disabled>
+            Select Month
+          </option>
           {months.map((month) => (
             <option key={month} value={month}>
               {month}
@@ -111,7 +123,7 @@ function Table() {
       console.error("Error deleting row:", error);
     }
   };
-  console.count("render")
+  console.count("render");
   useEffect(() => {
     // const userId = getUserIdFromToken();
     // console.log(userId);
@@ -138,17 +150,24 @@ function Table() {
       {/* {console.log(data)} */}
       <div className="container-fluid bg-white" style={{ marginTop: "100px" }}>
         <MaterialTable
+          style={{ marginTop: "100px" }}
           title="Editable Preview"
           columns={columns}
-          // rows={data}
           data={data}
           editable={{
             onRowAdd: addRow,
             onRowUpdate: updateRow,
             onRowDelete: deleteRow,
           }}
+          options={{
+            exportButton:true,
+            exportFileName:"TableData",
+          }}
         />
-        <div className="w-100 d-flex justify-content-start" style={{backgroundColor:"white"}}>
+        <div
+          className="w-100 d-flex justify-content-start"
+          style={{ backgroundColor: "white" }}
+        >
           <Hours />
         </div>
       </div>

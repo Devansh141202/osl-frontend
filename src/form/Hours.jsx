@@ -4,6 +4,7 @@ import { Bar } from "react-chartjs-2";
 import HoursChart from "./Chart.jsx";
 import Button from "@mui/material/Button";
 import { Form, useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import { CodeSharp } from "@material-ui/icons";
 import { white } from "material-ui/styles/colors";
 import { Col, Row } from "react-bootstrap";
@@ -55,8 +56,18 @@ const App = () => {
       console.error("Error fetching total hours data:", error);
     }
   };
+  const navigate = useNavigate();
   useEffect(() => {
     fetchTotalHours();
+    // let isAuth = localStorage.getItem('token');
+    // console.log(isAuth)
+    //     if(isAuth === null) {
+    //         navigate("/login");
+    //     }
+    //     setTimeout(()=>{
+    //       localStorage.clear()
+    //       alert("session timed out please refresh!!!")
+    //     }, 30*60*1000)
   }, [selectedMonth, selectedState, selectedDistrict]);
   const finalData = {
     labels: totalHoursData.map((item) => item._id),
@@ -64,14 +75,14 @@ const App = () => {
       {
         label: "Hours Worked",
         data: totalHoursData.map((item) => item.count),
-        backgroundColor: "rgba(75,192,192,0.8)",
-        borderColor: "rgba(75,192,192,0.5)",
+        backgroundColor: "rgba(0,130,132, 0.8)",
+        borderColor: "rgba(0,130,132,0.5)",
         borderWidth: 1,
       },
     ],
   };
   useEffect(() => {
-    console.log(totalHoursData);
+    // console.log(totalHoursData);
     fetchStates();
     fetchTotalHours();
   }, []);
@@ -101,14 +112,20 @@ const App = () => {
 
   return (
     <div style={{ backgroundColor: white }}>
-      <h2 className="mt-4 mb-0"style={{ marginLeft: "15px" }}>Total Hours Worked</h2>
+      <h2 className="mt-4 mb-0" style={{ marginLeft: "15px" }}>
+        Total Hours Worked
+      </h2>
       <div className="d-flex">
         <div className="form-group m-3">
           <label htmlFor="state">State</label>
           <select
             id="stateDropdown"
             className="form-control"
-            style={{width: "150px"}}
+            style={{
+              width: "150px",
+              borderRadius: "5px",
+              border: "1px solid rgb(0,0,0,0.4)",
+            }}
             // {...register("state", { required: true })}
             onChange={(e) => {
               setSelectedState(e.target.value);
@@ -131,11 +148,19 @@ const App = () => {
           )}
         </div>
 
-        <div className="form-group m-3"
-        style={{width: "150px"}}>
+        <div
+          className="form-group m-3"
+          style={{
+            width: "150px",
+          }}
+        >
           <label htmlFor="district">District</label>
           <select
             id="districtDropdown"
+            style={{
+              borderRadius: "5px",
+              border: "1px solid rgb(0,0,0,0.4)",
+            }}
             className="form-control"
             // {...register("district", { required: true })}
             onChange={(e) => setSelectedDistrict(e.target.value)}
@@ -159,13 +184,16 @@ const App = () => {
         <div className="form-group m-3">
           <label htmlFor="month">Month</label>
           <select
+            style={{
+              width: "150px",
+              borderRadius: "5px",
+              border: "1px solid rgb(0,0,0,0.4)",
+            }}
             className="form-control"
-            style={{width: "150px"}}
             id="monthDropdown"
             onChange={(e) => {
               setSelectedMonth(e.target.value);
             }}
-            // {...register("month")}
           >
             <option value="" defaultValue>
               Select Month
@@ -185,15 +213,21 @@ const App = () => {
           </select>
         </div>
         <Button
-          color="success"
           variant="contained"
           onClick={handleReset}
-          style={{ marginTop: "53px", height: "30px", width: "30px" }}
+          className="rounded"
+          style={{
+            marginTop: "48px",
+            height: "39px",
+            width: "30px",
+            backgroundColor: "#2E7D32",
+            color: "white",
+          }}
         >
           Reset
         </Button>
       </div>
-      <div className="w-100 d-flex">
+      <div className="w-100 d-flex box-shadow">
         <div style={{ width: "100%", height: "400px" }}>
           <Bar
             data={finalData}
@@ -201,6 +235,36 @@ const App = () => {
               responsive: true,
               maintainAspectRatio: false,
               barThickness: 100,
+              scales: {
+                y: {
+                  ticks: {
+                    padding: 10,
+                  },
+                  title: {
+                    display: true,
+                    text: "Total Hours Worked",
+                    color: "black",
+                    font: {
+                      size: 20,
+                      weight: "bold",
+                    },
+                  },
+                },
+                x: {
+                  ticks: {
+                    padding: 10,
+                  },
+                  title: {
+                    display: true,
+                    text: "Companies",
+                    color: "black",
+                    font: {
+                      size: 20,
+                      weight: "bold",
+                    },
+                  },
+                },
+              },
             }}
             // data={totalHoursData}
           />

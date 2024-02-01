@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
 const Image = () => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [url, setUrl] = useState("");
@@ -26,13 +27,22 @@ const Image = () => {
       });
 
       if (response.ok) {
-        alert("File upload is  successfully");
+        toast.success("File uploaded successfully", {
+          position: "top-right",
+        });
+        // alert("File upload successfully");
       } else {
-        alert("Failed to upload the file due to errors");
+        toast.error("Failed to upload the file", {
+          position: "top-right",
+        })
+        // alert("Failed to upload the file due to errors");
       }
     } catch (error) {
       console.error("Error while uploading the file:", error);
-      alert("Error occurred while uploading the file");
+      // alert("Error occurred while uploading the file");
+      toast.error(error, {
+        position: "top-right",
+      })
     }
   };
   const { register, handleSubmit, reset } = useForm();
@@ -52,6 +62,7 @@ const Image = () => {
       <div className="d-flex justify-content-center">
         <input type="file" onChange={handleFileChange} />
         <button onClick={handleUpload}>Upload</button>
+        <ToastContainer />
       </div>
       <div class="d-flex justify-content-center pt-5 mt-3">
         <div class="input-group w-auto">

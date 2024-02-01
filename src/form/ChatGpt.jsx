@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import axios from "axios";
-import './ChatGpt.css'
-import LOGO from "./ChatGPT-logo-with-color-Background.png"
-import 'bootstrap/dist/css/bootstrap.min.css';
+import "./ChatGpt.css";
+import LOGO from "./ChatGPT-logo-with-color-Background.png";
+import "bootstrap/dist/css/bootstrap.min.css";
+import { Button } from "@material-ui/core";
 export default function ChatGPT() {
   const [prompt, setPrompt] = useState("");
   const [response, setResponse] = useState("");
@@ -29,24 +30,55 @@ export default function ChatGPT() {
   };
 
   return (
-    <div className="container container-sm p-3 bg-light-subtle">
+    <div
+      style={{ backgroundColor: "rgb(221,221,221)" }}
+      className="container container-sm p-3"
+    >
       {" "}
-      <div className="d-flex justify-content-center align-items-center mt-5">
+      <div
+        style={{ marginTop: "100px" }}
+        className="d-flex justify-content-center align-items-center"
+      >
         <img src={LOGO} className="logo p-2 box-shadow" alt=""></img>
         &nbsp;&nbsp;&nbsp;
-        <h1 className="title text-center text-darkGreen" style={{fontSize:'65px'}}>ChatGPT API</h1>
+        <h1
+          className="title text-center text-darkGreen"
+          style={{ fontSize: "65px" }}
+        >
+          ChatGPT API
+        </h1>
       </div>
-      <form className="form" onSubmit={handleSubmit}>
+      <form className="form">
         <div className="form-group box-shadow p-3">
-          <h4 htmlFor="" className="text-darkGreen mb-0">Ask questions</h4>
-          <input
-            className="mt-3 rounded p-3"
-            style={{ outline: 'none', border: 0, background: '#CCE7E8' }}
-            type="text"
-            placeholder="Enter text"
-            value={prompt}
-            onChange={handlePrompt}
-          />
+          <h4 htmlFor="" className="text-darkGreen mb-0">
+            Ask questions
+          </h4>
+          <div className="d-flex align-items-center">
+            <input
+              className="mt-3 rounded p-3"
+              style={{ outline: "none", border: 0, background: "#CCE7E8" }}
+              type="text"
+              placeholder="Enter text"
+              value={prompt}
+              onChange={handlePrompt}
+            />
+            <Button
+              variant="contained"
+              onClick={handleSubmit}
+              className="rounded"
+              style={{
+                marginTop:"15px",
+                marginLeft: "13px",
+                // borderRadius: "",
+                height: "39px",
+                width: "30px",
+                backgroundColor: "rgb(0,101,103)",
+                color: "white",
+              }}
+            >
+              Ask
+            </Button>
+          </div>
         </div>{" "}
         {/*<button className="btn btn-accept w-100" type="submit">
           Go
