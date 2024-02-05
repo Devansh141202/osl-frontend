@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
+import { Bounce, ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 
@@ -18,7 +18,15 @@ const Login = () => {
   const navigate = useNavigate();
   const successToast = ()=>{
     toast.success("Login Successfull", {
-      position: "top-center",
+       position:"top-center",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          transition: Bounce,
     })
   }
   const onLogin = async (formData) => {
@@ -42,7 +50,15 @@ const Login = () => {
       // Handle login error
       console.error("Login Error", error.response.data);
       toast.error("Login failed", {
-        position: "top-center",
+         position:"top-center",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          transition: Bounce,
       });
       // setLoginError(error.response.data.error || "Login failed");
     }

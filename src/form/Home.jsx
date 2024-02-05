@@ -7,7 +7,7 @@ import TabPanel from "@mui/lab/TabPanel";
 import { Link } from "react-router-dom";
 
 export default function LabTabs() {
-  const [value, setValue] = React.useState("1");
+  const [value, setValue] = React.useState("All Tasks");
 
   const handleChange = (event, newValue) => {
     setValue(newValue);

@@ -7,9 +7,20 @@
   text-align: center;
 }
 .main-div{
-  height: 100%;
+  height: 80%;
   /* background-color: white; */
 }
+
+.outer-div {
+  flex: 1;
+}
+/* .outer-div:after {
+  content: "";
+  display: block;
+} */
+/* .footer-stick {
+
+} */
 .custom-form:hover{
   border-bottom: 5px solid red;
 }

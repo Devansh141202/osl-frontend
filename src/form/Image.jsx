@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import Button from "@mui/material/Button";
 import axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
+import { Bounce, ToastContainer, toast } from "react-toastify";
 const Image = () => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [url, setUrl] = useState("");
+  const [id, setId] = useState("");
   const [image, setImage] = useState("");
   const handleFileChange = (e) => {
     setSelectedFile(e.target.files[0]);
@@ -21,34 +23,58 @@ const Image = () => {
     console.log(selectedFile);
 
     try {
-      const response = await fetch("https://osl-sarkar-backend.onrender.com/api/photos", {
-        method: "POST",
-        body: formData,
-      });
-
-      if (response.ok) {
+      const response = await axios.post(
+        "https://osl-sarkar-backend.onrender.com/api/photos",
+        formData
+      );
+      // console.log(response.data.dbData._id);
+      setId(response.data.dbData._id);
+      if (response.data.dbData._id) {
         toast.success("File uploaded successfully", {
-          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          transition: Bounce,
         });
         // alert("File upload successfully");
       } else {
-        toast.error("Failed to upload the file", {
-          position: "top-right",
-        })
+        toast.error("Invalid File type", {
+          position: "top-center",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          transition: Bounce,
+        });
         // alert("Failed to upload the file due to errors");
       }
     } catch (error) {
       console.error("Error while uploading the file:", error);
       // alert("Error occurred while uploading the file");
       toast.error(error, {
-        position: "top-right",
-      })
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
     }
   };
   const { register, handleSubmit, reset } = useForm();
   const getImage = async (data) => {
     const response = await axios.get(
-      `https://osl-learning.onrender.com/get-image/${data.id}`,
+      `https://osl-sarkar-backend.onrender.com/get-image/${data.id}`,
       {}
     );
     setImage(response.data.image.image);
@@ -58,16 +84,37 @@ const Image = () => {
 
   return (
     <div className="p-3 bg-white" style={{ marginTop: "100px" }}>
-      <h2 style={{ textAlign: "center" }}>Single File Upload</h2>
+      <h2 style={{ textAlign: "center", marginBottom: "20px" }}>
+        Base64 Generator
+      </h2>
       <div className="d-flex justify-content-center">
-        <input type="file" onChange={handleFileChange} />
-        <button onClick={handleUpload}>Upload</button>
+        <input
+          type="file"
+          accept=".jpeg, .png, .gif, .jpg"
+          onChange={handleFileChange}
+        />
+        <Button
+          onClick={handleUpload}
+          style={{
+            backgroundColor: "#2E7D32",
+            color: "white",
+            height: "30px",
+            width: "30px",
+          }}
+        >
+          upload
+        </Button>
         <ToastContainer />
       </div>
-      <div class="d-flex justify-content-center pt-5 mt-3">
-        <div class="input-group w-auto">
+      <div className="text-center p-3">
+        <p>{id ? id : <h6>Id will be here after upload!!</h6>}</p>
+      </div>
+      <div class="d-flex justify-content-center pt-5 mt-3 ">
+        <div class="input-group w-50 d-flex  align-items-center">
           <form
+            className="w-100 d-flex justify-content-center align-items-center gap-3 "
             onSubmit={handleSubmit((data) => {
+              setId("")
               setUrl(JSON.stringify(data));
               getImage(data);
               reset();
@@ -75,20 +122,34 @@ const Image = () => {
           >
             <input
               type="text"
-              className="mb-5"
+              style={{
+                fontSize: "15px",
+                marginTop: "50px",
+                height: "30px",
+                width: "300px",
+                paddingLeft: "10px",
+                border: "solid 2px black",
+              }}
+              className="mb-5 rounded"
               placeholder="Search Image"
               aria-label="Example input"
               aria-describedby="button-addon1"
               {...register("id", { required: true })}
             />
-            <button
-              //   class="btn"
+            <Button
+              variant="contained"
               type="submit"
-              id="button-addon1"
-              data-mdb-ripple-color="dark"
+              className="rounded"
+              style={{
+                height: "30px",
+                width: "30px",
+                marginRight: "10px",
+                backgroundColor: "#2E7D32",
+                color: "white",
+              }}
             >
-              Find Image
-            </button>
+              Find
+            </Button>
           </form>
         </div>
       </div>

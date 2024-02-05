@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import pptxgen from "pptxgenjs";
 import { Bar } from "react-chartjs-2";
 import HoursChart from "./Chart.jsx";
 import Button from "@mui/material/Button";
@@ -81,6 +82,20 @@ const App = () => {
       },
     ],
   };
+  const dataCharts = [
+    {
+      name: "Total",
+      labels: totalHoursData.map((item) => item._id),
+      values: totalHoursData.map((item) => item.count),
+    },
+  ];
+  const dataCharts1 = [
+    {
+      name: "final",
+      labels: totalHoursData.map((item) => item._id),
+      values: totalHoursData.map((item) => item.count),
+    },
+  ];
   useEffect(() => {
     // console.log(totalHoursData);
     fetchStates();
@@ -98,10 +113,36 @@ const App = () => {
     }
   };
 
-  // if (loading) {
-  //   return <div>Loading...</div>;
-  // }
   const handleReset = () => {
+    let pptx = new pptxgen();
+    let slide = pptx.addSlide();
+
+    console.log("this ", dataCharts);
+    slide.addChart(pptx.ChartType.bar, dataCharts, {
+      x: 0.5,
+      y: 0.6,
+      w: 6.0/2,
+      h: 3.0/2,
+    });
+    slide.addChart(pptx.ChartType.bar, dataCharts1, {
+      x: 7.0,
+      y: 0.6,
+      w: 6.0/2,
+      h: 3.0/2,
+    });
+    slide.addChart(pptx.ChartType.bar, dataCharts1, {
+      x: 7.0,
+      y: 3.8,
+      w: 6.0/2,
+      h: 3.5/2,
+    });
+    slide.addChart(pptx.ChartType.bar, dataCharts1, {
+      x: 0.5,
+      y: 3.8,
+      w: 6.0/2,
+      h: 3.5/2,
+    });
+    pptx.writeFile({ fileName: "PptxGenJS-Presentation-1" });
     setSelectedState("");
     setSelectedDistrict("");
     setSelectedMonth("");

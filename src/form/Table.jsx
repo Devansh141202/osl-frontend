@@ -147,7 +147,6 @@ function Table() {
 
   return (
     <>
-      {/* {console.log(data)} */}
       <div className="container-fluid bg-white" style={{ marginTop: "100px" }}>
         <MaterialTable
           style={{ marginTop: "100px" }}
@@ -160,8 +159,8 @@ function Table() {
             onRowDelete: deleteRow,
           }}
           options={{
-            exportButton:true,
-            exportFileName:"TableData",
+            exportButton: true,
+            exportFileName: "TableData",
           }}
         />
         <div

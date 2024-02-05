@@ -1,4 +1,3 @@
-import logo from "./logo.svg";
 import UserDetails from "./form/UserDetails";
 import Login from "./form/Login";
 import Table from "./form/Table";
@@ -11,38 +10,38 @@ import Image from "./form/Image";
 import ChatGPT from "./form/ChatGpt";
 import Chart from "./form/Chart";
 import Hours from "./form/Hours";
-import logo1 from "./logo.png";
-import '@fontsource/roboto/300.css';
-import '@fontsource/roboto/400.css';
-import '@fontsource/roboto/500.css';
-import '@fontsource/roboto/700.css';
+import "@fontsource/roboto/300.css";
+import "@fontsource/roboto/400.css";
+import "@fontsource/roboto/500.css";
+import "@fontsource/roboto/700.css";
+import Header from "./form/Header";
 import { Container } from "react-bootstrap";
+import Footer from "./form/Footer";
 
 function App() {
   return (
-    <div className="main-div">
-      {/* <img src={logo1} style={{height:"80px", margin:"20px"}}></img> */}
-      <nav class="navbar fixed-top navbar-light bg-light">
-        <a class="navbar-brand" href="/">
-          <img src={logo1} style={{ height: "60px", marginLeft: "20px" }}></img>
-        </a>
-      </nav>
-      <Container fluid >
-        <Router>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/hours" element={<Hours />} />
-            <Route path="/image" element={<Image />} />
-            <Route path="/table" element={<Table />} />
-            <Route path="/openai" element={<ChatGPT />} />
-            <Route path="/html" element={<Html />} />
-            <Route path="/signup" element={<UserDetails />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/chart" element={<Chart />} />
-          </Routes>
-        </Router>
-      </Container>
-    </div>
+    <>
+      <div className="main-div w-100 outer-div">
+        {/* <img src={logo1} style={{height:"80px", margin:"20px"}}></img> */}
+        <Header />
+        <Container fluid className="h-100">
+          <Router>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/hours" element={<Hours />} />
+              <Route path="/image" element={<Image />} />
+              <Route path="/table" element={<Table />} />
+              <Route path="/openai" element={<ChatGPT />} />
+              <Route path="/html" element={<Html />} />
+              <Route path="/signup" element={<UserDetails />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/chart" element={<Chart />} />
+            </Routes>
+          </Router>
+        </Container>
+        {/* <Footer className="footer-stick" /> */}
+      </div>
+    </>
   );
 }
 
