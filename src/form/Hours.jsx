@@ -122,25 +122,25 @@ const App = () => {
       x: 0.5,
       y: 0.6,
       w: 6.0/2,
-      h: 3.0/2,
+      h: 2,
     });
     slide.addChart(pptx.ChartType.bar, dataCharts1, {
-      x: 7.0,
+      x: 6.0,
       y: 0.6,
       w: 6.0/2,
-      h: 3.0/2,
+      h: 2,
     });
     slide.addChart(pptx.ChartType.bar, dataCharts1, {
-      x: 7.0,
-      y: 3.8,
+      x: 6.0,
+      y: 3.2,
       w: 6.0/2,
-      h: 3.5/2,
+      h: 2,
     });
     slide.addChart(pptx.ChartType.bar, dataCharts1, {
       x: 0.5,
-      y: 3.8,
+      y: 3.2,
       w: 6.0/2,
-      h: 3.5/2,
+      h: 2,
     });
     pptx.writeFile({ fileName: "PptxGenJS-Presentation-1" });
     setSelectedState("");
